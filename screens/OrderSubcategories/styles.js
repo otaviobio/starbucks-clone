@@ -7,10 +7,10 @@ export const HeaderBackButton = styled.Pressable`
 // Before it was (SafeAreaView).attrs({edges:["top"]})
 export const HeaderContainer = styled.View`
   /* background-color: ${({theme}) => theme.COLORS.GREEN_700}; */
-  position: absolute;
+  /* position: absolute;
   top: 20px;
   right: 0;
-  left: 0;
+  left: 0; */
   padding: 10px;
   flex-direction: row;
   justify-content: space-between;

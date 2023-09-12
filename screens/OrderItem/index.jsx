@@ -4,6 +4,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useRef,
 } from "react";
 import { menuItems } from "../../assets/data/menuItems";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -137,9 +138,9 @@ export default function OrderItem({ route, navigation }) {
 
   // animation starts
 
-  const imagePosition = new Animated.Value(0);
-  const mainContentAppear = new Animated.Value(0);
-  const buttonPosition = new Animated.Value(0);
+  const imagePosition = useRef(new Animated.Value(0)).current;
+  const mainContentAppear = useRef(new Animated.Value(0)).current;
+  const buttonPosition = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     setTimeout(() => {

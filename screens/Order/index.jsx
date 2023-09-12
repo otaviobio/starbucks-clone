@@ -30,6 +30,7 @@ import Animated, {
 import { Ionicons } from "@expo/vector-icons";
 
 export default function Order({ navigation }) {
+  
   const handleCategoryPress = (category) => {
     navigation.navigate("OrderSubcategories", { category });
   };
@@ -86,107 +87,106 @@ export default function Order({ navigation }) {
   });
 
   return (
-    <>
-      <Animated.View
-        style={[
-          {
-            zIndex: 1,
-            position: 'relative',
-          },
-          headerAnimated,
-        ]}
-      >
-        <HeaderContainer style={{ height: 100 }}>
-          <Animated.Text
-            style={[
-              {
-                fontSize: 30,
-                fontWeight: "bold",
-                color: "black",
-                marginTop: 50,
-              },
-              textAnimated,
-            ]}
-          >
-            Order
-          </Animated.Text>
-          <Animated.View style={[
-              {
-                marginTop: 20,
-              },
-              iconAnimated,
-            ]}>
-          <HeaderBackButton onPress={() => navigation.goBack()}>
-            <Ionicons
-              name="md-search-outline"
-              size={32}
-              color="#7C7C8A"
-              style={{ marginLeft: -8 }}
-            />
-          </HeaderBackButton>
-          </Animated.View>
-        </HeaderContainer>
-        <Animated.View
-          style={[{
-            flexDirection: "row",
-            borderBottomWidth: 0.5,
-            borderBottomColor: "#7C7C8A",
-            marginTop: 0,
-          }, backAnimated]}
-        >
-          <TabMenuButton style={{borderBottomWidth: 3,
-            borderBottomColor: "#006241"}}>
-            <TabMenuText style={{color: "#121214"}}>Menu</TabMenuText>
-          </TabMenuButton>
-          <TabMenuButton>
-            <TabMenuText>Featured</TabMenuText>
-          </TabMenuButton>
-          <TabMenuButton>
-            <TabMenuText>Previous</TabMenuText>
-          </TabMenuButton>
-          <TabMenuButton>
-            <TabMenuText>Favourites</TabMenuText>
-          </TabMenuButton>
-        </Animated.View>
-      </Animated.View>
-      <Animated.ScrollView
-        style={{ marginTop: 0 }}
-        onScroll={scrollHandler}
-        contentContainerStyle={{ minHeight: "100%" }}
-        scrollEventThrottle={16}
-      >
-        <Container>
-          <FlatList
-            data={menuCategories}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              // Wrap each category's items in a separate View
-              <CategoryContainer>
-                {/* Show the category name on top */}
-                <CategoryHeader>
-                  <CategoryTitle>{item.type}</CategoryTitle>
-                  <Pressable>
-                    <CategoryButton>See all</CategoryButton>
-                  </Pressable>
-                </CategoryHeader>
-                {/* Map over each item in the category and render it */}
-                {item.categories.map((category) => (
-                  <Pressable
-                    key={category.name}
-                    onPress={() => handleCategoryPress(category.name)}
-                  >
-                    <Category>
-                      <CategoryImage source={category.img} resizeMode="cover" />
-                      <CategoryName>{category.name}</CategoryName>
-                    </Category>
-                  </Pressable>
-                ))}
-              </CategoryContainer>
-            )}
-          />
-        </Container>
-      </Animated.ScrollView>
-          <CartSummary />
-    </>
+      <Container>
+        <FlatList
+          data={menuCategories}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <CategoryContainer>
+              <CategoryHeader>
+                <CategoryTitle>{item.type}</CategoryTitle>
+                <Pressable>
+                  <CategoryButton>See all</CategoryButton>
+                </Pressable>
+              </CategoryHeader>
+              {item.categories.map((category) => (
+                <Pressable
+                  key={category.name}
+                  onPress={() => handleCategoryPress(category.name)}
+                >
+                  <Category>
+                    <CategoryImage source={category.img} resizeMode="cover" />
+                    <CategoryName>{category.name}</CategoryName>
+                  </Category>
+                </Pressable>
+              ))}
+            </CategoryContainer>
+          )}
+          ListHeaderComponent={
+            <Animated.View
+              style={[
+                {
+                  zIndex: 1,
+                  position: "relative",
+                },
+                headerAnimated,
+              ]}
+            >
+              <HeaderContainer style={{ height: 100 }}>
+                <Animated.Text
+                  style={[
+                    {
+                      fontSize: 30,
+                      fontWeight: "bold",
+                      color: "black",
+                      marginTop: 50,
+                    },
+                    textAnimated,
+                  ]}
+                >
+                  Order
+                </Animated.Text>
+                <Animated.View
+                  style={[
+                    {
+                      marginTop: 20,
+                    },
+                    iconAnimated,
+                  ]}
+                >
+                  <HeaderBackButton onPress={() => navigation.goBack()}>
+                    <Ionicons
+                      name="md-search-outline"
+                      size={32}
+                      color="#7C7C8A"
+                      style={{ marginLeft: -8 }}
+                    />
+                  </HeaderBackButton>
+                </Animated.View>
+              </HeaderContainer>
+              <Animated.View
+                style={[
+                  {
+                    flexDirection: "row",
+                    borderBottomWidth: 0.5,
+                    borderBottomColor: "#7C7C8A",
+                    marginTop: 0,
+                  },
+                  backAnimated,
+                ]}
+              >
+                <TabMenuButton
+                  style={{
+                    borderBottomWidth: 3,
+                    borderBottomColor: "#006241",
+                  }}
+                >
+                  <TabMenuText style={{ color: "#121214" }}>Menu</TabMenuText>
+                </TabMenuButton>
+                <TabMenuButton>
+                  <TabMenuText>Featured</TabMenuText>
+                </TabMenuButton>
+                <TabMenuButton>
+                  <TabMenuText>Previous</TabMenuText>
+                </TabMenuButton>
+                <TabMenuButton>
+                  <TabMenuText>Favourites</TabMenuText>
+                </TabMenuButton>
+              </Animated.View>
+            </Animated.View>
+          }
+        />
+        <CartSummary />
+      </Container>
   );
 }

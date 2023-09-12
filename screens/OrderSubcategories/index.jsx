@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from "react";
-import { View, FlatList, Pressable, TouchableWithoutFeedback } from "react-native";
+import { View, FlatList, Pressable, TouchableWithoutFeedback, SafeAreaView } from "react-native";
 import { menuItems } from "../../assets/data/menuItems";
 import {
   CategoryButton,
@@ -120,83 +120,58 @@ const OrderSubcategories = ({ route, navigation }) => {
   }, [navigation, matchingCategory]);
 
   return (
-    <>
-      <Animated.View
-        style={[
-          {
-            zIndex: 1,
-          },
-          headerAnimated,
-        ]}
-      >
-        <HeaderContainer style={{ height: 150 }}>
-          <HeaderBackButton onPress={() => navigation.goBack()}>
-            <MaterialCommunityIcons
-              name="chevron-left"
-              size={40}
-              color="#7C7C8A"
-              style={{ marginLeft: -8 }}
-            />
-          </HeaderBackButton>
-          <Animated.Text
-            style={[
-              {
-                fontSize: 25,
-                fontWeight: "bold",
-                color: "black",
-                marginTop: 80,
-                marginLeft: -275,
-                marginBottom: 0,
-              },
-              textAnimated,
-            ]}
-          >
-            {matchingCategory.category}
-          </Animated.Text>
-          <HeaderBackButton onPress={() => navigation.goBack()}>
-            <Ionicons
-              name="md-search-outline"
-              size={32}
-              color="#7C7C8A"
-              style={{ marginLeft: -8 }}
-            />
-          </HeaderBackButton>
-        </HeaderContainer>
-      </Animated.View>
-      <Animated.ScrollView
-        style={{ marginTop: 100 }}
-        onScroll={scrollHandler}
-        contentContainerStyle={{ minHeight: "100%" }}
-        scrollEventThrottle={16}
-      >
-        <TouchableWithoutFeedback
-          onPress={() => {
-            // scroll to top
-            console.log("scroll to top");
-          }}
-        >
+    <SafeAreaView>
+      <FlatList
+        data={matchingCategory.subCategories}
+        renderItem={renderSubCategory}
+        keyExtractor={(item) => item.name}
+        ListHeaderComponent={
           <Animated.View
             style={[
               {
-                height: 150, // Should be same height as Header
-                backgroundColor: "transparent",
-                marginBottom: -100,
-                // marginBottom: -230,
+                zIndex: 1,
               },
-              // backAnimated,
+              headerAnimated,
             ]}
-          />
-        </TouchableWithoutFeedback>
-        <Container>
-          <FlatList
-            data={matchingCategory.subCategories}
-            renderItem={renderSubCategory}
-            keyExtractor={(item) => item.name}
-          />
-        </Container>
-      </Animated.ScrollView>
-          <CartSummary />
-    </>
+          >
+            <HeaderContainer>
+              <HeaderBackButton onPress={() => navigation.goBack()}>
+                <MaterialCommunityIcons
+                  name="chevron-left"
+                  size={40}
+                  color="#7C7C8A"
+                  style={{ marginLeft: -8 }}
+                />
+              </HeaderBackButton>
+              <Animated.Text
+                style={[
+                  {
+                    fontSize: 25,
+                    fontWeight: "bold",
+                    color: "black",
+                    marginTop: 80,
+                    marginLeft: -275,
+                    marginBottom: 0,
+                  },
+                  textAnimated,
+                ]}
+              >
+                {matchingCategory.category}
+              </Animated.Text>
+              <HeaderBackButton onPress={() => navigation.goBack()}>
+                <Ionicons
+                  name="md-search-outline"
+                  size={32}
+                  color="#7C7C8A"
+                  style={{ marginLeft: -8 }}
+                />
+              </HeaderBackButton>
+            </HeaderContainer>
+          </Animated.View>
+        }
+      />
+      <CartSummary />
+    </SafeAreaView>
   );
 };
 

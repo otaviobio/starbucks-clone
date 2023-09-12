@@ -9,7 +9,6 @@ export const OrderProvider = ({ children }) => {
 
   const addOrder = (order) => {
     setOrders([...orders, order]);
-    console.log(orders);
   };
 
   const duplicateOrderItem = (index) => {
